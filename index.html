@@ -2,11 +2,153 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
- 
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Oswald|Pacifico&display=swap" rel="stylesheet">
 </head>
 <body>
+  <style>
+    html {
+      box-sizing: border-box;
+      background: url(/assets/background.jpg);
+      background-size: cover;
+      font-family: 'Oswald', cursive;
+      font-size: 20px;
+      font-weight: 200;
+    }
+    
+    body {
+      margin: 0;
+    }
+    
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    .panels {
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .panel {
+      box-shadow: inset 0 0 0 5px rgba(110, 190, 244, 0.1);
+      color: white;
+      text-align: center;
+      align-items: center;
+      /* Safari transitionend event.propertyName === flex */
+      /* Chrome + FF transitionend event.propertyName === flex-grow */
+      transition:
+        font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        background 0.2s;
+      font-size: 20px;
+      background-size: auto;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      flex: 1;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel1 { background-image:url(/assets/olaf.png); }
+    .panel2 { background-image:url(/assets/bruni.png); }
+    .panel3 { background-image:url(/assets/thenokk.png); }
+    .panel4 { background-image:url(/assets/sven.png); }
+    .panel5 { background-image:url(/assets/elsa.png); }
+    .panel6 { background-image:url(/assets/anna.png); }
+
+    /* Flex Items */
+    .panel > * {
+      margin: 0;
+      width: 100%;
+      transition: transform 0.5s;
+      flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .panel > *:first-child { transform: translateY(-100%); }
+    .panel.open-active > *:first-child { transform: translateY(0); }
+    .panel > *:last-child { transform: translateY(100%); }
+    .panel.open-active > *:last-child { transform: translateY(-125%); }
+
+    .panel p {
+      font-family: 'oswald', cursive;
+      text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
+      font-size: 2em;
+    }
+    
+    .panel p:nth-child(2) {
+      font-size: 5em;
+      opacity: .65;
+      color: #ACE5EE;
+    }
+
+    .panel.open {
+      flex: 5;
+      font-size: 20px;
+    }
+    
+    @media only screen and (max-width: 600px) {
+      .panel p {
+        font-size: 1em;
+      }
+    }
+  </style>
+
+
+  <div class="panels">
+    <div class="panel panel1">
+      <p>Friendliest snowman in Arendelle</p>
+      <p>F</p>
+      <p>Ola&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    </div>
+    <div class="panel panel2">
+      <p>Sweetheart spirit of fire</p>
+      <p>R</p>
+      <p>&nbsp;&nbsp;&nbsp;B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uni</p>
+    </div>
+    <div class="panel panel3">
+      <p>Fierce spirit of water</p>
+      <p>O</p>
+      <p>&nbsp;&nbsp;The&nbsp;N&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kk&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+    </div>
+    <div class="panel panel4">
+      <p><small>There are no characters with a z in their name!</small></p>
+      <p>Z</p>
+      <p>Sven</p>
+    </div>
+    <div class="panel panel5">
+      <p>the Snow Queen</p>
+      <p>E</p>
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lsa</p>
+    </div>
+    <div class="panel panel6">
+        <p>Queen of Arendelle</p>
+        <p>N</p>
+        <p>&nbsp;A&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;na</p>
+      </div>
+  </div>
+
   <script>
+    const panels = document.querySelectorAll('.panel');
+
+    function toggleOpen() {
+      console.log('Hello');
+      this.classList.toggle('open');
+    }
+
+    function toggleActive(e) {
+      console.log(e.propertyName);
+      if (e.propertyName.includes('flex')) {
+        this.classList.toggle('open-active');
+      }
+    }
+
+    panels.forEach(panel => panel.addEventListener('click', toggleOpen));
+    panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
   </script>
+
 </body>
 </html>
